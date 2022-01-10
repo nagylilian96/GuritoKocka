@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>Gurítókocka</title>
+    <style>
+        .container{
+            border: 5px solid gray;
+            width: 50%;
+            height: 500px;
+        }
+        #restart{
+            visibility: hidden;
+        }
+        .img{
+            width: 100px;
+            height: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container mt-2">
+        <div class="row justify-content-center mt-2">
+            <button class="btn btn-success btn-lg pd-2 mr-2" id="start" type="button">Guríts</button>
+        </div>
+        <div class="row justify-content-center mt-2">
+            <button class="btn btn-info btn-lg pd-2 mr-2" id="restart" type="button">Új játék</button>
+        </div>
+
+        <div class="row d-flex justify-content-center h-100px mt-2" id="img"></div>
+
+        <div class="row justify-content-center mt-2" id="sorszam"></div> 
+        
+        <div class="row justify-content-center mt-2">
+            <ul class="font-weight-bold" id="lista"></ul>
+        </div>
+    </div>
+
+    <script>
+        console.log('ok')
+        
+        document.getElementById('start').addEventListener('click', start)
+        document.getElementById('restart').addEventListener('click', restart)
+
+        let imgDiv = document.getElementById('img');
+        let sorszamDiv = document.getElementById('sorszam');
+        let lista = document.getElementById('lista');
+        let restartBtn = document.getElementById('restart');
+
+        let kattint = 0;
+        let myRand = 0;
+        
+        function restart(){
+            kattint = 0;
+            imgDiv.innerHTML = "";
+            sorszamDiv.innerHTML = "";
+            lista.innerHTML = "";
+            document.getElementById('start').disabled = false
+            restartBtn.style.visibility = "hidden"
+        }
+
+        function imgList(kszam,sszam,obj){
+            imgDiv.innerHTML = `<img src="dice-${kszam}.svg" alt="kocka${kszam}" width="100" height="100">`;
+            sorszamDiv.innerHTML = `<h3>Ez az ${sszam}. dobás.<h3>`;
+            lista.append(obj);
+        }
+
+        function start(){
+            myRand = Math.floor(Math.random() * (7-1)+1);
+            console.log("gurítás: " + kattint + " eredmény: " + myRand)
+
+            let elem = document.createElement('li')
+            elem.innerHTML = `${myRand}`;
+
+            kattint += 1;
+            if (kattint === 5){
+                document.getElementById('start').disabled = true
+                restartBtn.style.visibility = "visible"
+            }
+
+            imgList(myRand, kattint, elem);
+        }
+
+    </script>
+</body>
+</html>
